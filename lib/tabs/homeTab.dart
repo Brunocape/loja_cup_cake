@@ -29,7 +29,7 @@ class HomeTab extends StatelessWidget {
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text("Projeto Integrador VIII - Loja de cupCake's Bruno Capelario Santos"),
+                title: Text("Pic - Bruno Capelario Santos"),
                 centerTitle: true,
               ),
             ),

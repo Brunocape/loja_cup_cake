@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/homePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,11 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Cake',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: const Color.fromARGB(255, 4, 125, 141)
+          primarySwatch: Colors.blue,
+          primaryColor: const Color.fromARGB(255, 4, 125, 141)
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: HomePage(UserModel()),
     );
   }
 }

@@ -6,7 +6,8 @@ class ProductData {
   late String category;
   late String title;
   late double price;
-  late List images;
+  List images = [];
+  late String description;
 
 
   ProductData.fromDocument(DocumentSnapshot snapshot){
@@ -15,6 +16,7 @@ class ProductData {
     price = snapshot.get("price") + 0.0;
     images = snapshot.get("images");
     category = "";
+    description = snapshot.get("description");
   }
 
   Map<String, dynamic> toResumedMap(){

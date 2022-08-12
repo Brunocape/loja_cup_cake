@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/models/productData.dart';
+import 'package:loja_cup_cake/pages/productPage.dart';
 
 
 
@@ -13,9 +14,9 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-       /* Navigator.of(context).push(
-            MaterialPageRoute(builder: (context)=>ProductScreen(product))
-        );*/
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context)=>ProductPage(product))
+        );
       },
       child: Card(
         child: type == "grid"

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/homePage.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
           primaryColor: const Color.fromARGB(255, 4, 125, 141)
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(UserModel()),
+      home: HomePage(UsuarioModel()),
     );
   }
 }

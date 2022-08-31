@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:loja_cup_cake/models/productData.dart';
+import 'package:loja_cup_cake/models/itemModel.dart';
 
 
 class ProductPage extends StatefulWidget {
 
-  final ProductData product;
+  final Item product;
 
   ProductPage(this.product);
 
@@ -15,7 +15,7 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
 
-  final ProductData product;
+  final Item product;
 
   _ProductPageState(this.product);
 
@@ -26,7 +26,7 @@ class _ProductPageState extends State<ProductPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title),
+        title: Text(product.tipo!),
         centerTitle: true,
       ),
       body: ListView(
@@ -35,10 +35,10 @@ class _ProductPageState extends State<ProductPage> {
             aspectRatio: 0.9,
             child: CarouselSlider(
               options: CarouselOptions(),
-              items:  product.images.map((url) {
+              items:  product.imagens!.map((img) {
                 return Builder(
                   builder: (BuildContext context) {
-                    return Image( image:  NetworkImage(url));
+                    return Image( image:  NetworkImage(img.path!));
                   },
                 );
               }).toList(),
@@ -50,7 +50,7 @@ class _ProductPageState extends State<ProductPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Text(
-                  product.title,
+                  product.tipo!,
                   style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w500
@@ -58,7 +58,7 @@ class _ProductPageState extends State<ProductPage> {
                   maxLines: 3,
                 ),
                 Text(
-                  "R\$ ${product.price.toStringAsFixed(2)}",
+                  "R\$ ${product.perco!}",
                   style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
@@ -108,7 +108,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
                 Text(
-                  product.description,
+                  product.descricao!,
                   style: TextStyle(
                       fontSize: 16.0
                   ),

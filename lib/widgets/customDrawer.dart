@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/loginPage.dart';
 import 'package:loja_cup_cake/tiles/drwerTile.dart';
@@ -6,26 +7,27 @@ import 'package:loja_cup_cake/tiles/drwerTile.dart';
 class CustomDrawer extends StatefulWidget {
 
   final PageController _controller;
-  UserModel model;
-  CustomDrawer(this._controller, this.model);
+  UsuarioModel usuario;
+  CustomDrawer(this._controller, this.usuario);
 
   @override
-  State<CustomDrawer> createState() => _CustomDrawerState(_controller,model);
+  State<CustomDrawer> createState() => _CustomDrawerState(_controller,usuario);
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
 
   final PageController _controller;
-  UserModel model;
-  _CustomDrawerState(this._controller, this.model);
+  UsuarioModel usuario;
+  _CustomDrawerState(this._controller, this.usuario);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    model.Iniciar().then((value){
+    Usuario_Controller us = Usuario_Controller();
+    us.GetUserLogado().then((value){
       setState(() {
-        model;
+        usuario = value;
       });
     });
   }
@@ -67,7 +69,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text("Olá, ${!model.isLoggedIn() ? "" : model.userData["name"]}",
+                            Text("Olá, ${!usuario.isLoggedIn() ? "" : usuario.nome}",
                               style: const TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold
@@ -75,7 +77,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             GestureDetector(
                               child: Text(
-                                !model.isLoggedIn() ?
+                                !usuario.isLoggedIn() ?
                                 "Entre ou cadastre-se >"
                                     : "Sair",
                                 style: TextStyle(
@@ -85,16 +87,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 ),
                               ),
                               onTap: ()async{
-                                if(!model.isLoggedIn())  {
-                                 var model1 = await Navigator.of(context).push(
+                                if(!usuario.isLoggedIn())  {
+                                 var usuario1 = await Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context)=>LoginPage())
                                   );
                                   setState((){
-                                    model = model1 ?? UserModel();
+                                    usuario = usuario1 ?? UsuarioModel();
                                   });
                                 } else {
                                   setState(() {
-                                    model.signOut();
+                                    usuario = UsuarioModel();
+                                    Usuario_Controller uc = Usuario_Controller();
+                                    uc.signOut();
                                   });
                                 }
                               },

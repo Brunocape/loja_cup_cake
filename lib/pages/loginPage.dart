@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/signUpPage.dart';
 import 'package:loja_cup_cake/services/loadAndToast.dart';
@@ -15,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  UserModel model = UserModel();
+  UsuarioModel usuario = UsuarioModel();
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +33,8 @@ class _LoginPageState extends State<LoginPage> {
               "CRIAR CONTA",
               style: TextStyle(fontSize: 15.0),
             ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
+            onPressed: () async {
+              usuario = await Navigator.push(context,MaterialPageRoute(builder: (context) => SignUpPage()));
             },
           )
         ],
@@ -77,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       duration: Duration(seconds: 2),
                     ));
                   } else {
-                    model.recoverPass(_emailController.text);
+                    //model.recoverPass(_emailController.text);
 
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text("Confira seu e-mail!"),
@@ -109,13 +111,19 @@ class _LoginPageState extends State<LoginPage> {
 
                   // ignore: use_build_context_synchronously
                   LoadAndToast lt = LoadAndToast();
-
-                  lt.showToast(
-                      context,
-                      await model.signIn(
-                          email: _emailController.text,
-                          pass: _passController.text));
-                  Navigator.pop(context, model);
+                  lt.showLoaderDialog(context, "Aguarde.....");
+                  Usuario_Controller us = Usuario_Controller();
+                  var response =  await us.logar(
+                  email: _emailController.text,
+                  senha: _passController.text);
+                  if(response["status"] == "Ok"){
+                    usuario = response["user"];
+                    Navigator.pop(context);
+                    Navigator.pop(context, usuario);
+                  }else {
+                    Navigator.pop(context);
+                    lt.showToast(context, response["mensagem"]);
+                  }
                 },
               ),
             ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:loja_cup_cake/controllers/imageHomeController.dart';
+import 'package:loja_cup_cake/models/imagemHomeModel.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
   @override
 
-
+  ImageHomeController ic = ImageHomeController();
 
   Widget build(BuildContext context) {
     Widget _buildBodyBack() => Container(
@@ -33,11 +34,8 @@ class HomeTab extends StatelessWidget {
                 centerTitle: true,
               ),
             ),
-            FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance
-                  .collection("home")
-                  .orderBy("pos")
-                  .get(),
+            FutureBuilder<List<ImagemHome>>(
+              future: ic.GetImagens() ,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return SliverToBoxAdapter(
@@ -55,13 +53,13 @@ class HomeTab extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 1.0,
                       crossAxisSpacing: 1.0,
-                      children: snapshot.data!.docs.map(( doc) {
+                      children: snapshot.data!.map(( doc) {
                         return StaggeredGridTile.count(
-                          crossAxisCellCount: doc["x"],
-                          mainAxisCellCount: doc["y"],
+                          crossAxisCellCount: doc.posX!,
+                          mainAxisCellCount: doc.posY!,
                           child: FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
-                            image: doc["image"],
+                            image: doc.url!,
                             fit: BoxFit.cover,
                           ),
                         );

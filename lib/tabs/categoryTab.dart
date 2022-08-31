@@ -1,13 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/controllers/categoriaController.dart';
+import 'package:loja_cup_cake/models/categoriaModel.dart';
 import 'package:loja_cup_cake/tiles/categoryTile.dart';
 class CategoryTab extends StatelessWidget {
-  const CategoryTab({Key? key}) : super(key: key);
+
+  Categoria_Controller categoria_controller = Categoria_Controller();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-        future:FirebaseFirestore.instance.collection("categorias").get() ,
+    return FutureBuilder<List<Categoria>>(
+        future: categoria_controller.GetCategorias(),
         builder: (context, snapshot){
           if(!snapshot.hasData){
               return const Center(
@@ -15,7 +17,7 @@ class CategoryTab extends StatelessWidget {
               );
            }else{
             return ListView(
-              children: snapshot.data!.docs.map(
+              children: snapshot.data!.map(
                (doc){
                   return CategoryTile(doc);
             }).toList(),

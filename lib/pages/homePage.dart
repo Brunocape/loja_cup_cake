@@ -6,7 +6,7 @@ import 'package:loja_cup_cake/widgets/customDrawer.dart';
 
 class HomePage extends StatelessWidget {
 final _pageController = PageController();
-final UserModel model;
+final UsuarioModel model;
 
 HomePage(this.model);
 

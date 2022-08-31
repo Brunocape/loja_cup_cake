@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/services/loadAndToast.dart';
 
@@ -75,18 +76,17 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      Map<String, dynamic> userData = {
-                        "name": _nameController.text,
-                        "email": _emailController.text,
-                      };
-                      UserModel model = UserModel();
+                      UsuarioModel model = UsuarioModel();
                       LoadAndToast lt = LoadAndToast();
-                      lt.showToast(
-                          context,
-                          await model.signUp(
-                            userData: userData,
-                            pass: _passController.text,
-                          ));
+                      lt.showLoaderDialog(context, "Aguarde....");
+                      Usuario_Controller us = Usuario_Controller();
+                      var response =  await us.Cadastrar(
+                          email: _emailController.text,
+                          senha: _passController.text,
+                          nome: _nameController.text
+                      );
+                      lt.showToast(context,response["mensagem"]);
+                      Navigator.pop(context, response["user"]);
                     }
                   },
                 ),

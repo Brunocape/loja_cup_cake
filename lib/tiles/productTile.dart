@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:loja_cup_cake/models/productData.dart';
+import 'package:loja_cup_cake/models/itemModel.dart';
 import 'package:loja_cup_cake/pages/productPage.dart';
 
 
 
 class ProductTile extends StatelessWidget {
   final String type;
-  final ProductData product;
+  final Item product;
 
   ProductTile(this.type, this.product);
 
@@ -27,7 +27,7 @@ class ProductTile extends StatelessWidget {
             AspectRatio(
               aspectRatio: 0.8,
               child: Image.network(
-                product.images[0],
+                product.imagens![0].path!,
                 fit: BoxFit.cover,
               ),
             ),
@@ -37,11 +37,11 @@ class ProductTile extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      product.title,
+                      product.tipo!,
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "R\$ ${product.price.toStringAsFixed(2)}",
+                      "R\$ ${product.perco!}",
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 17.0,
@@ -58,7 +58,7 @@ class ProductTile extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Image.network(
-                product.images[0],
+                product.imagens![0].path!,
                 fit: BoxFit.cover,
                 height: 250.0,
               ),
@@ -71,11 +71,11 @@ class ProductTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.title,
+                      product.tipo!,
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "R\$ ${product.price.toStringAsFixed(2)}",
+                      "R\$ ${product.perco!}",
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 17.0,

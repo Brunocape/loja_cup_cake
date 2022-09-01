@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/loginPage.dart';
+import 'package:loja_cup_cake/pages/validarCodigoPage.dart';
 import 'package:loja_cup_cake/tiles/drwerTile.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -28,6 +29,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
     us.GetUserLogado().then((value){
       setState(() {
         usuario = value;
+        if(usuario.ativo == 0 && usuario.id != 0){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, usuario.email!,)));
+        }
       });
     });
   }

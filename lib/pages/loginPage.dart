@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/signUpPage.dart';
+import 'package:loja_cup_cake/pages/validarCodigoPage.dart';
 import 'package:loja_cup_cake/services/loadAndToast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -35,6 +36,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
             onPressed: () async {
               usuario = await Navigator.push(context,MaterialPageRoute(builder: (context) => SignUpPage()));
+              if(usuario.ativo == 0 && usuario.id != 0){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, _emailController.text),));
+              }
             },
           )
         ],
@@ -71,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_emailController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Insira seu e-mail para recuperação!"),
@@ -79,13 +83,17 @@ class _LoginPageState extends State<LoginPage> {
                       duration: Duration(seconds: 2),
                     ));
                   } else {
-                    //model.recoverPass(_emailController.text);
+                    Usuario_Controller uc = Usuario_Controller();
+                    LoadAndToast lt = LoadAndToast();
+                    lt.showLoaderDialog(context, "Estamos enviando o email");
+                    var retorno = await uc.SendEmail(_emailController.text);
+                    Navigator.pop(context);
+                    if(retorno["status"]== "Erro"){
 
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Confira seu e-mail!"),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      duration: Duration(seconds: 2),
-                    ));
+                      lt.showToast(context, retorno["mensagem"]);
+                    }else{
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(true, _emailController.text),));
+                    }
                   }
                 },
                 child: const Text(
@@ -107,22 +115,26 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 onPressed: () async {
-                  if (_formKey.currentState!.validate()) {}
-
-                  // ignore: use_build_context_synchronously
-                  LoadAndToast lt = LoadAndToast();
-                  lt.showLoaderDialog(context, "Aguarde.....");
-                  Usuario_Controller us = Usuario_Controller();
-                  var response =  await us.logar(
-                  email: _emailController.text,
-                  senha: _passController.text);
-                  if(response["status"] == "Ok"){
-                    usuario = response["user"];
-                    Navigator.pop(context);
-                    Navigator.pop(context, usuario);
-                  }else {
-                    Navigator.pop(context);
-                    lt.showToast(context, response["mensagem"]);
+                  if (_formKey.currentState!.validate()) {
+                    // ignore: use_build_context_synchronously
+                    LoadAndToast lt = LoadAndToast();
+                    lt.showLoaderDialog(context, "Aguarde.....");
+                    Usuario_Controller us = Usuario_Controller();
+                    var response = await us.logar(
+                        email: _emailController.text,
+                        senha: _passController.text);
+                    if (response["status"] == "Ok") {
+                      usuario = response["user"];
+                      Navigator.pop(context);
+                      Navigator.pop(context, usuario);
+                    } else {
+                      if(response["mensagem"] == "Este usuario não esta ativo"){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, _emailController.text),));
+                      }else{
+                        Navigator.pop(context);
+                        lt.showToast(context, response["mensagem"]);
+                      }
+                    }
                   }
                 },
               ),

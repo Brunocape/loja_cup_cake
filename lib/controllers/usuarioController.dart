@@ -27,6 +27,81 @@ class Usuario_Controller {
     }
   }
 
+  Future<Map<String, dynamic>> SendEmail(String email) async {
+    Map<String, dynamic> retorno = {};
+    var url = Uri.parse(_url + 'usuario/EnviarEmail');
+    try {
+      var response = await http.post(
+        url,
+        body: {'emailUsuario': email},
+      );
+      var data = json.decode(response.body);
+      retorno["mensagem"] = data["mensagem"];
+      retorno["status"] = data["status"];
+      return retorno;
+
+    } catch (Erro) {
+      Map<String, dynamic> retorno = {
+        "status": "Erro",
+        "mensagem": "falha ao conectar ao servidor"
+      };
+      return retorno;
+    }
+  }
+
+  Future<Map<String, dynamic>> Ativa(String email, String codigo) async {
+    Map<String, dynamic> retorno = {};
+    var url = Uri.parse(_url + 'usuario/AtivarUsuario');
+    try {
+      var response = await http.post(
+        url,
+        body: {
+          'emailUsuario': email,
+          'codigo_validUsuario' : codigo,
+        },
+      );
+      var data = json.decode(response.body);
+      retorno["mensagem"] = data["mensagem"];
+      retorno["status"] = data["status"];
+      return retorno;
+
+    } catch (Erro) {
+      Map<String, dynamic> retorno = {
+        "status": "Erro",
+        "mensagem": "falha ao conectar ao servidor"
+      };
+      return retorno;
+    }
+  }
+
+
+
+  Future<Map<String, dynamic>> AlterarSenha(String email, String codigo, String senha) async {
+    Map<String, dynamic> retorno = {};
+    var url = Uri.parse(_url + 'usuario/AlterarSenha');
+    try {
+      var response = await http.post(
+        url,
+        body: {
+          'emailUsuario': email,
+          'codigo_validUsuario' : codigo,
+          'senhaUsuario' : senha
+        },
+      );
+      var data = json.decode(response.body);
+      retorno["mensagem"] = data["mensagem"];
+      retorno["status"] = data["status"];
+      return retorno;
+
+    } catch (Erro) {
+      Map<String, dynamic> retorno = {
+        "status": "Erro",
+        "mensagem": "falha ao conectar ao servidor"
+      };
+      return retorno;
+    }
+  }
+
   Future<Map<String, dynamic>> logar(
       {String email = "", String senha = ""}) async {
     Map<String, dynamic> retorno = {};
@@ -53,7 +128,7 @@ class Usuario_Controller {
       return retorno;
     } catch (erro) {
       Map<String, dynamic> retorno = {
-        "return": "Erro",
+        "status": "Erro",
         "mensagem": erro.toString()
       };
       return retorno;
@@ -90,7 +165,7 @@ class Usuario_Controller {
       return retorno;
     } catch (erro) {
       Map<String, dynamic> retorno = {
-        "return": "Erro",
+        "status": "Erro",
         "mensagem": erro.toString()
       };
       return retorno;

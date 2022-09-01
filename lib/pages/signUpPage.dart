@@ -85,8 +85,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           senha: _passController.text,
                           nome: _nameController.text
                       );
-                      lt.showToast(context,response["mensagem"]);
                       Navigator.pop(context, response["user"]);
+                      lt.showToast(context,response["mensagem"]);
                     }
                   },
                 ),

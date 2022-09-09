@@ -25,14 +25,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Usuario_Controller us = Usuario_Controller();
-    us.GetUserLogado().then((value){
       setState(() {
-        usuario = value;
         if(usuario.ativo == 0 && usuario.id != 0){
           Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, usuario.email!,)));
         }
-      });
     });
   }
 

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/controllers/itemController.dart';
+import 'package:loja_cup_cake/models/cartModel.dart';
 import 'package:loja_cup_cake/models/categoriaModel.dart';
 import 'package:loja_cup_cake/models/itemModel.dart';
+import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/tiles/productTile.dart';
 class CategoryPage extends StatelessWidget {
 
   Categoria categoria;
-  CategoryPage(this.categoria);
+  UsuarioModel user;
+  CartModel cartModel;
+  CategoryPage(this.categoria,this.cartModel, this.user);
+
 
   Item_Controller item_controller = Item_Controller();
   @override
@@ -46,7 +51,7 @@ class CategoryPage extends StatelessWidget {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index){
                               Item data = snapshot.data![index];
-                              return ProductTile("grid", data);
+                              return ProductTile("grid", data, user, cartModel);
                             }
                         ),
                         ListView.builder(
@@ -54,7 +59,7 @@ class CategoryPage extends StatelessWidget {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index){
                               Item data = snapshot.data![index];
-                              return ProductTile("list", data);
+                              return ProductTile("list", data, user, cartModel);
                             }
                         )
                       ]

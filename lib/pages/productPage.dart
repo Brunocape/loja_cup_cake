@@ -1,23 +1,39 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/models/cartModel.dart';
+import 'package:loja_cup_cake/models/itemCartModel.dart';
 import 'package:loja_cup_cake/models/itemModel.dart';
+import 'package:loja_cup_cake/models/userModel.dart';
+import 'package:loja_cup_cake/pages/cartPage.dart';
+import 'package:loja_cup_cake/pages/loginPage.dart';
 
 
 class ProductPage extends StatefulWidget {
 
   final Item product;
+  UsuarioModel user;
+  CartModel cartModel;
 
-  ProductPage(this.product);
+  ProductPage(this.product, this.user, this.cartModel);
 
   @override
-  _ProductPageState createState() => _ProductPageState(product);
+  _ProductPageState createState() => _ProductPageState(product, user,cartModel);
 }
 
 class _ProductPageState extends State<ProductPage> {
 
   final Item product;
+  UsuarioModel user;
+  CartModel cartModel;
 
-  _ProductPageState(this.product);
+  _ProductPageState(this.product, this.user,this.cartModel);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,39 +82,34 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
                 const SizedBox(height: 16.0,),
-              /*  SizedBox(
+                SizedBox(
                   height: 44.0,
                   child: ElevatedButton(
                     onPressed:
                          (){
-                      if(UserModel.of(context).isLoggedIn()){
+                      if(user.isLoggedIn()){
 
-                        CartProduct cartProduct = CartProduct();
-                        cartProduct.quantity = 1;
-                        cartProduct.pid = product.id;
-                        cartProduct.category = product.category;
-                        cartProduct.productData = product;
+                        ItemCartModel itemCartModel = ItemCartModel();
+                        itemCartModel.qtde = 1;
+                        itemCartModel.itemId = product.id;
+                        itemCartModel.usuarioId = user.id;
 
-                        CartModel.of(context).addCartItem(cartProduct);
-
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=>CartScreen())
-                        );
+                        cartModel.addCartItem(itemCartModel).then((value) => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context)=>CartPage(cartModel,user))
+                        ));
 
                       } else {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=>LoginScreen())
+                            MaterialPageRoute(builder: (context)=>LoginPage())
                         );
                       }
                     } ,
-                    child: Text(UserModel.of(context).isLoggedIn() ? "Adicionar ao Carrinho"
+                    child: Text(user.isLoggedIn() ? "Adicionar ao Carrinho"
                         : "Entre para Comprar",
                       style: TextStyle(fontSize: 18.0),
                     ),
-                    color: primaryColor,
-                    textColor: Colors.white,
                   ),
-                ),*/
+                ),
                 SizedBox(height: 16.0,),
                 Text(
                   "Descrição",

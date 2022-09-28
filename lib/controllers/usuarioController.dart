@@ -21,7 +21,7 @@ class Usuario_Controller {
         body: {'idUsuario': user_id},
       );
       var data = json.decode(response.body);
-      return UsuarioModel.fromJson(data["dados"]);
+      return UsuarioModel.fromJson(data["dados"][0]);
     } catch (Erro) {
       return UsuarioModel();
     }

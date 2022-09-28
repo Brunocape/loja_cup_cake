@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/models/cartModel.dart';
 import 'package:loja_cup_cake/models/itemModel.dart';
+import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/productPage.dart';
 
 
@@ -7,15 +9,17 @@ import 'package:loja_cup_cake/pages/productPage.dart';
 class ProductTile extends StatelessWidget {
   final String type;
   final Item product;
+  UsuarioModel user;
+  CartModel cartModel;
 
-  ProductTile(this.type, this.product);
+  ProductTile(this.type, this.product,this.user, this.cartModel);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context)=>ProductPage(product))
+            MaterialPageRoute(builder: (context)=>ProductPage(product,user, cartModel))
         );
       },
       child: Card(

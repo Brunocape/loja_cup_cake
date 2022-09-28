@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/controllers/categoriaController.dart';
+import 'package:loja_cup_cake/models/cartModel.dart';
 import 'package:loja_cup_cake/models/categoriaModel.dart';
+import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/tiles/categoryTile.dart';
 class CategoryTab extends StatelessWidget {
-
+  UsuarioModel user;
+  CartModel cartModel;
+CategoryTab(this.cartModel, this.user);
   Categoria_Controller categoria_controller = Categoria_Controller();
 
   @override
@@ -19,7 +23,7 @@ class CategoryTab extends StatelessWidget {
             return ListView(
               children: snapshot.data!.map(
                (doc){
-                  return CategoryTile(doc);
+                  return CategoryTile(doc, cartModel, user);
             }).toList(),
             );
           }

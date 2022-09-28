@@ -1,4 +1,3 @@
-
 class UsuarioModel {
   int? ativo;
   String? email;
@@ -18,6 +17,7 @@ class UsuarioModel {
         this.dtAlteracao,
         this.senha,
         this.token});
+
 
   UsuarioModel.fromJson(Map<String, dynamic> json) {
     ativo = json['ativo']??0;

@@ -25,14 +25,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Usuario_Controller us = Usuario_Controller();
-    us.GetUserLogado().then((value){
       setState(() {
-        usuario = value;
         if(usuario.ativo == 0 && usuario.id != 0){
           Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, usuario.email!,)));
         }
-      });
     });
   }
 
@@ -73,16 +69,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text("Olá, ${!usuario.isLoggedIn() ? "" : usuario.nome}",
+                            Text("Olá, ${!usuario.isLoggedIn() ? "Visitante" : usuario.nome}",
                               style: const TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold
                               ),
                             ),
-                            GestureDetector(
+                            /*GestureDetector(
                               child: Text(
                                 !usuario.isLoggedIn() ?
-                                "Entre ou cadastre-se >"
+                                "Faça login"
                                     : "Sair",
                                 style: TextStyle(
                                     color: Theme.of(context).primaryColor,
@@ -106,7 +102,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   });
                                 }
                               },
-                            )
+                            )*/
                           ],
                         ))
                   ],

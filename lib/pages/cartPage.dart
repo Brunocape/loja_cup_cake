@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/models/cartModel.dart';
+import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/loginPage.dart';
+import 'package:loja_cup_cake/tiles/cart_tile.dart';
 
 class CartPage extends StatelessWidget {
 
   CartModel cartModel;
-  CartPage(this.cartModel);
+  UsuarioModel user;
+  CartPage(this.cartModel, this.user);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Meu Carrinho"),
-        actions: <Widget>[
-          Container(
-            padding: EdgeInsets.only(right: 8.0),
-            alignment: Alignment.center,
-            child:
+        appBar: AppBar(
+          title: Text("Meu Carrinho"),
+          actions: <Widget>[
+            Container(
+                padding: EdgeInsets.only(right: 8.0),
+                alignment: Alignment.center,
+                child:
                 Text(
                   "${cartModel.products.length } ${cartModel.products.length == 1 ? "ITEM" : "ITENS"}",
                   style: TextStyle(fontSize: 17.0),
                 )
-          )
-        ],
-      ),
-      body:_getWidget(context)
+            )
+          ],
+        ),
+        body:_getWidget(context)
     );
   }
 
   Widget _getWidget(BuildContext context) {
-    if (cartModel.isLoading && cartModel.user.isLoggedIn()) {
+    if (cartModel.isLoading && user.isLoggedIn()) {
       return Center(
         child: CircularProgressIndicator(),
       );
-    } else if (!cartModel.user.isLoggedIn()) {
+    } else if (!user.isLoggedIn()) {
       return Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -73,7 +76,7 @@ class CartPage extends StatelessWidget {
           Column(
             children: cartModel.products.map(
                     (product) {
-                  return Container(); // CartTile(product);
+                  return  CartTile(cartModel, product, user);
                 }
             ).toList(),
           ),

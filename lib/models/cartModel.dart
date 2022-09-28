@@ -1,15 +1,9 @@
 import 'dart:async';
 
+import 'package:loja_cup_cake/controllers/cartController.dart';
 import 'package:loja_cup_cake/models/itemCartModel.dart';
-import 'package:loja_cup_cake/models/itemModel.dart';
-import 'package:loja_cup_cake/models/userModel.dart';
-import 'package:loja_cup_cake/models/cartModel.dart';
-import 'package:loja_cup_cake/models/userModel.dart';
-import 'package:flutter/material.dart';
 
 class CartModel  {
-
-  UsuarioModel user;
 
   List<ItemCartModel> products = [];
 
@@ -18,34 +12,22 @@ class CartModel  {
 
   bool isLoading = false;
 
-  CartModel(this.user){
-    if(user.isLoggedIn())
-      _loadCartItems();
+  Future<Map<String,dynamic>> addCartItem(ItemCartModel itemCartModel) async{
+    CartController cc = CartController();
+    Map<String,dynamic> retorno =  await cc.Cadastrar(itemCartModel);
+    await loadCartItems(itemCartModel.usuarioId!);
+    return retorno;
   }
 
-
-  void addCartItem(ItemCartModel itemCartModel){
-    //salvar item no banco de dados
-    products.add(itemCartModel);
-
+  Future<Map<String,dynamic>> updateCartItem(ItemCartModel itemCartModel) async{
+    CartController cc = CartController();
+    return  await cc.Atualizar(itemCartModel);
   }
 
-  void removeCartItem(ItemCartModel itemCartModel){
-
-    //remover item no banco de dados
+  Future<Map<String,dynamic>> removeCartItem(ItemCartModel itemCartModel) async{
+    CartController cc = CartController();
     products.remove(itemCartModel);
-
-  }
-
-  void decProduct(ItemCartModel itemCartModel){
-    itemCartModel.qtde = (itemCartModel.qtde ?? 1) - 1;
-    //atualizar no banco de dados
-
- }
-
-  void incProduct(ItemCartModel itemCartModel){
-    itemCartModel.qtde = (itemCartModel.qtde ?? 1) + 1;
-    //atualizar no banco de dados
+    return  await cc.Apagar(itemCartModel);
 
   }
 
@@ -122,19 +104,9 @@ class CartModel  {
     // return refOrder.documentID;
   }
 
-  void _loadCartItems() async {
-
-
-
+  Future<void> loadCartItems(int userId) async {
+    CartController cc = CartController();
+    this.products = await cc.LoadItens(userId);
   }
 
 }
-
-
-
-
-
-
-
-
-

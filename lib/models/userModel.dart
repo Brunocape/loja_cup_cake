@@ -1,3 +1,6 @@
+
+import 'package:flutter/material.dart';
+
 class UsuarioModel {
   int? ativo;
   String? email;

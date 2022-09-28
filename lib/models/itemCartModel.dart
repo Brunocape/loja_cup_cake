@@ -36,15 +36,4 @@ class ItemCartModel{
     }
     return data;
   }
-  void decProduct(){
-    this.qtde = (this.qtde ?? 1) - 1;
-    //atualizar no banco de dados
-
-  }
-
-  void incProduct(){
-    this.qtde = (this.qtde ?? 1) + 1;
-    //atualizar no banco de dados
-
-  }
 }

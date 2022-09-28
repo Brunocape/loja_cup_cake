@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/models/cartModel.dart';
-import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/loginPage.dart';
-import 'package:loja_cup_cake/tiles/cart_tile.dart';
 
 class CartPage extends StatelessWidget {
 
   CartModel cartModel;
-  UsuarioModel user;
-  CartPage(this.cartModel, this.user);
+  CartPage(this.cartModel);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +29,11 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _getWidget(BuildContext context) {
-    if (cartModel.isLoading && user.isLoggedIn()) {
+    if (cartModel.isLoading && cartModel.user.isLoggedIn()) {
       return Center(
         child: CircularProgressIndicator(),
       );
-    } else if (!user.isLoggedIn()) {
+    } else if (!cartModel.user.isLoggedIn()) {
       return Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -76,7 +73,7 @@ class CartPage extends StatelessWidget {
           Column(
             children: cartModel.products.map(
                     (product) {
-                      return  CartTile(cartModel, product, user);
+                  return Container(); // CartTile(product);
                 }
             ).toList(),
           ),

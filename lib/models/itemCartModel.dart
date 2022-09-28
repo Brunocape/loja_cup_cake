@@ -1,3 +1,4 @@
+import 'package:loja_cup_cake/controllers/cartController.dart';
 import 'package:loja_cup_cake/models/itemModel.dart';
 
 
@@ -38,13 +39,13 @@ class ItemCartModel{
   }
   void decProduct(){
     this.qtde = (this.qtde ?? 1) - 1;
-    //atualizar no banco de dados
-
+    CartController cartController = CartController();
+    cartController.Atualizar(this);
   }
 
   void incProduct(){
     this.qtde = (this.qtde ?? 1) + 1;
-    //atualizar no banco de dados
-
+    CartController cartController = CartController();
+    cartController.Atualizar(this);
   }
 }

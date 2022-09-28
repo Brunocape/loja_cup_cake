@@ -28,7 +28,8 @@ class _HomePageState extends State<HomePage> {
     Usuario_Controller uc = Usuario_Controller();
     uc.GetUserLogado().then((value) {
       this.user = value;
-      cartModel?.loadCartItems(user.id!).then((value) => {setState(() {})});
+      setState(() {});
+      cartModel?.loadCartItems(user.id!);
     });
   }
 

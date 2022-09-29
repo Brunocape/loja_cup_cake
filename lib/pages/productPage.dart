@@ -111,7 +111,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
                 SizedBox(height: 16.0,),
-                Text(
+                const Text(
                   "Descrição",
                   style: TextStyle(
                       fontSize: 16.0,
@@ -120,7 +120,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 Text(
                   product.descricao!,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16.0
                   ),
                 )

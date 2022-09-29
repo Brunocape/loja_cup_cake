@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/models/cartModel.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
+import 'package:loja_cup_cake/pages/homePage.dart';
 import 'package:loja_cup_cake/pages/loginPage.dart';
+import 'package:loja_cup_cake/services/loadAndToast.dart';
 import 'package:loja_cup_cake/tiles/cart_tile.dart';
+import 'package:loja_cup_cake/widgets/cart_price.dart';
+import 'package:loja_cup_cake/widgets/discount_card.dart';
 
 class CartPage extends StatelessWidget {
 
@@ -32,11 +36,7 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _getWidget(BuildContext context) {
-    if (cartModel.isLoading && user.isLoggedIn()) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (!user.isLoggedIn()) {
+    if (!user.isLoggedIn()) {
       return Container(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -80,15 +80,20 @@ class CartPage extends StatelessWidget {
                 }
             ).toList(),
           ),
-          // DiscountCard(),
+           DiscountCard(cartModel, user),
           // ShipCard(),
-          //  CartPrice(() async {
-          //    String orderId = await model.finishOrder();
-          //    if(orderId != null)
-          //      Navigator.of(context).pushReplacement(
-          //        MaterialPageRoute(builder: (context)=>OrderScreen(orderId))
-          //      );
-          //  }),
+           CartPrice(() async {
+             LoadAndToast lt = LoadAndToast();
+             lt.showLoaderDialog(context, "Registrando pedido...");
+             Map<String, dynamic> retorno = await cartModel.finishOrder();
+             Navigator.pop(context);
+             if(retorno["status"] == "Erro"){
+               lt.showToast(context, retorno["mensagem"]);
+             }else{
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(user),));
+               lt.showToast(context, retorno["mensagem"]);
+             }
+           },cartModel),
         ],
       );
     }

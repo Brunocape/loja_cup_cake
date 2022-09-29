@@ -74,9 +74,8 @@ class _CartTileState extends State<CartTile> {
                       color: Theme.of(context).primaryColor,
                       onPressed: itemCartModel.qtde! > 1 ?
                           (){
-                        setState(()=>{
-                          itemCartModel.decProduct(),
-                        });
+                          itemCartModel.decProduct();
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartPage(cartModel, user),));
                       } : null,
                     ),
                     Text(itemCartModel.qtde.toString()),
@@ -84,9 +83,8 @@ class _CartTileState extends State<CartTile> {
                       icon: Icon(Icons.add),
                       color: Theme.of(context).primaryColor,
                       onPressed: (){
-                        setState(()=>{
-                          itemCartModel.incProduct(),
-                        });
+                          itemCartModel.incProduct();
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartPage(cartModel, user),));
                       },
                     ),
                     ElevatedButton(

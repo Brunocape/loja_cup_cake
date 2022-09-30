@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:loja_cup_cake/models/pedidoModel.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/services/constantes.dart';
 import 'package:loja_cup_cake/services/pref_service.dart';
@@ -49,7 +50,7 @@ class Usuario_Controller {
     }
   }
 
-  Future<Map<String, dynamic>> Ativa(String email, String codigo) async {
+  Future<Map<String, dynamic>> Ativar(String email, String codigo) async {
     Map<String, dynamic> retorno = {};
     var url = Uri.parse(_url + 'usuario/AtivarUsuario');
     try {
@@ -143,7 +144,7 @@ class Usuario_Controller {
   Future<Map<String, dynamic>> Cadastrar(
       {String email = "", String senha = "", String nome = ""}) async {
     Map<String, dynamic> retorno = {};
-    var url = Uri.parse(_url + 'cadastrar');
+    var url = Uri.parse(_url + 'usuario/cadastrar');
     try {
       var response = await http.post(
         url,
@@ -158,7 +159,7 @@ class Usuario_Controller {
       if (response.statusCode == 200 && data["status"] == "Ok") {
         retorno["user"] = UsuarioModel.fromJson(data["user"]);
         PreferenceService pref = PreferenceService();
-        pref.SetPreference(retorno["user"].token!, true, retorno["user"].id!);
+        pref.SetPreference(retorno["user"].token!, true, retorno["user"].id!.toString());
       }
       retorno["status"] = data["status"];
       retorno["mensagem"] = data["mensagem"];
@@ -171,4 +172,29 @@ class Usuario_Controller {
       return retorno;
     }
   }
+
+  Future<List<PedidoModel>> GetPedidos(String userId)async {
+    List<PedidoModel> retorno = [];
+
+    var url = Uri.parse(_url + 'pedido/buscarPorClienteId');
+    try {
+      var response = await http.post(
+        url,
+        //headers: {'Authorization': 'Bearer ' + user.ultimoLog.token_api},
+        body: {
+          'cliente_idPedido': userId,
+        },
+      );
+      var data = json.decode(response.body);
+      if (response.statusCode == 200 && data["status"] == "Ok") {
+        data["dados"].forEach((v) {
+          retorno.add(PedidoModel.fromJson(v));
+        });
+      }
+      return retorno;
+    } catch (erro) {
+      return retorno;
+    }
+  }
+
 }

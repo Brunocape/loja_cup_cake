@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/cartModel.dart';
+import 'package:loja_cup_cake/models/pedidoModel.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
 import 'package:loja_cup_cake/pages/loginPage.dart';
+import 'package:loja_cup_cake/pages/meusPedidosPage.dart';
+import 'package:loja_cup_cake/pages/sobreNosPage.dart';
 import 'package:loja_cup_cake/tabs/categoryTab.dart';
 import 'package:loja_cup_cake/tabs/homeTab.dart';
 import 'package:loja_cup_cake/widgets/cart_button.dart';
@@ -27,7 +30,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     Usuario_Controller uc = Usuario_Controller();
     uc.GetUserLogado().then((value) {
-      this.user = value;
+      if(this.user.id == null){
+        this.user = value;
+      }
       setState(() {});
       cartModel?.loadCartItems(user.id!);
     });
@@ -44,13 +49,9 @@ class _HomePageState extends State<HomePage> {
             title: const Text("Pit - Bruno Capelario Santos"),
             actions: [
               ElevatedButton(
-                  onPressed: () async {
+                  onPressed: ()  {
                     if (!user.isLoggedIn()) {
-                      var usuario1 = await Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => LoginPage()));
-                      setState(() {
-                        user = usuario1 ?? UsuarioModel();
-                      });
+                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
                     } else {
                       setState(() {
                         user = UsuarioModel();
@@ -81,17 +82,19 @@ class _HomePageState extends State<HomePage> {
           floatingActionButton: CartButton(user),
         ),
         Scaffold(
-          body: Container(
-            color: Colors.yellow,
+          appBar: AppBar(
+            title: Text("Meus Pedidos"),
           ),
+          body: MeusPedidosPage(user),
           drawer: CustomDrawer(_pageController, user),
         ),
         Scaffold(
-          body: Container(
-            color: Colors.green,
+          appBar: AppBar(
+            title:const Text("Quem Somos?", style: TextStyle(fontSize: 18, color: Colors.white),),
           ),
+          body: SobreNosPage(),
           drawer: CustomDrawer(_pageController, user),
-        )
+        ),
       ],
     );
   }

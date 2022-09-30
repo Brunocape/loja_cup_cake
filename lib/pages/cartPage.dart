@@ -56,9 +56,7 @@ class CartPage extends StatelessWidget {
             ElevatedButton(
               child: Text("Entrar", style: TextStyle(fontSize: 18.0),),
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => LoginPage())
-                );
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
               },
             )
           ],

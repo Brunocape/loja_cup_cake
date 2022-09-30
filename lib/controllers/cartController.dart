@@ -25,7 +25,7 @@ class CartController {
   }
 
   Future<Map<String, dynamic>> GetCupon(String desc) async {
-    var url = Uri.parse(_url + 'Cupom/buscarPorDesc');
+    var url = Uri.parse(_url + 'cupom/buscarPorDesc');
     try {
       var response = await http.post(url, body: {"descricaoCupom": desc});
       var data = json.decode(response.body);

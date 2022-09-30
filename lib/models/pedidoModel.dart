@@ -32,11 +32,11 @@ class PedidoModel {
   PedidoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     clienteId = json['cliente_id'];
-    vlrFrete = json['vlr_frete'];
-    vlrDesconto = json['vlr_desconto'];
+    vlrFrete = double.parse(json['vlr_frete'].toString()??"0");
+    vlrDesconto = double.parse(json['vlr_desconto'].toString()??"0");
     percDesconto = json['perc_desconto'];
-    vlrLiquido = json['vlr_liquido'];
-    vlrBruto = json['vlr_bruto'];
+    vlrLiquido = double.parse(json['vlr_liquido'].toString()??"0");
+    vlrBruto = double.parse(json['vlr_bruto'].toString()??"0");
     status = json['status'];
     dtInsercao = json['dt_insercao']??"";
     dtAlteracao = json['dt_alteracao']??"";
@@ -63,6 +63,14 @@ class PedidoModel {
         itensPdv!.add(ItensPdv.fromItemCart(v, percDesconto!));
       });
     }
+  }
+
+  int GetTotalItens(){
+    int total = 0;
+     itensPdv!.forEach((element) {
+       total += element.qtde!;
+    });
+    return total;
   }
 
 
@@ -112,10 +120,10 @@ class ItensPdv {
     id = json['id'];
     pdvId = json['pdv_id'];
     qtde = json['qtde'];
-    vlrUnit = json['vlr_unit'];
-    vlrTotal = json['vlr_total'];
-    vlrDesconto = json['vlr_desconto'];
-    vlrLiquido = json['vlr_liquido'];
+    vlrUnit = double.parse(json['vlr_unit'].toString()??"0");
+    vlrTotal = double.parse(json['vlr_total'].toString()??"0");
+    vlrDesconto = double.parse(json['vlr_desconto'].toString()??"0");
+    vlrLiquido = double.parse(json['vlr_liquido'].toString()??"0");
     dtInsercao = json['dt_insercao'];
     itemId = json['item_id'];
   }

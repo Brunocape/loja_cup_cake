@@ -33,10 +33,12 @@ UsuarioModel usuarioModel;
               ),
               initialValue: cartModel.couponCode ?? "",
               onFieldSubmitted: (text)async{
+                LoadAndToast lt = LoadAndToast();
+                lt.showLoaderDialog(context, "aguarde..");
                   Map<String,dynamic> retorno = await cartModel.setCoupon(text);
-                  LoadAndToast lt = LoadAndToast();
+                  Navigator.pop(context);
                   lt.showToast(context, retorno["mensagem"]);
-                  if(retorno["status"]=="OK")
+                  if(retorno["status"]=="Ok")
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartPage(cartModel, usuarioModel),));
               },
             ),

@@ -7,7 +7,7 @@ class PedidoController{
 
   Future<List<PedidoModel>> LoadPedidos(int userId) async {
     List<PedidoModel> retorno = [];
-    var url = Uri.parse(_url + 'Pedido/buscarPorClienteId');
+    var url = Uri.parse(_url + 'pedido/buscarPorClienteId');
     try {
       var response =
       await http.post(url, body: {"idUsuario": userId.toString()});
@@ -23,7 +23,7 @@ class PedidoController{
   }
 
   Future<Map<String, dynamic>> Salvar(PedidoModel pedido) async {
-    var url = Uri.parse(_url + 'Pedido/cadastrar');
+    var url = Uri.parse(_url + 'pedido/cadastrar');
     var pedidoJson = jsonEncode(pedido);
     try {
       var response =

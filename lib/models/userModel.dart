@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:loja_cup_cake/controllers/usuarioController.dart';
+import 'package:loja_cup_cake/models/pedidoModel.dart';
 
 class UsuarioModel {
   int? ativo;
@@ -48,5 +50,10 @@ class UsuarioModel {
 
   bool isLoggedIn(){
     return this.id != null && this.id != 0;
+  }
+
+  Future<List<PedidoModel>> GetPedidos()async{
+    Usuario_Controller uc = Usuario_Controller();
+    return await uc.GetPedidos(this.id.toString());
   }
 }

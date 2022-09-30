@@ -75,34 +75,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                   fontWeight: FontWeight.bold
                               ),
                             ),
-                            /*GestureDetector(
-                              child: Text(
-                                !usuario.isLoggedIn() ?
-                                "Faça login"
-                                    : "Sair",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              onTap: ()async{
-                                if(!usuario.isLoggedIn())  {
-                                 var usuario1 = await Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context)=>LoginPage())
-                                  );
-                                  setState((){
-                                    usuario = usuario1 ?? UsuarioModel();
-                                  });
-                                } else {
-                                  setState(() {
-                                    usuario = UsuarioModel();
-                                    Usuario_Controller uc = Usuario_Controller();
-                                    uc.signOut();
-                                  });
-                                }
-                              },
-                            )*/
+
                           ],
                         ))
                   ],
@@ -111,8 +84,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
               Divider(),
               DrawerTile("Inicio",Icons.home,_controller,0),
               DrawerTile("Produtos",Icons.list,_controller,1),
-              DrawerTile("Onde Estamos",Icons.location_on,_controller,2),
-              DrawerTile("Meus Pedidos",Icons.playlist_add_check,_controller,3),
+              DrawerTile("Meus Pedidos",Icons.playlist_add_check,_controller,2),
+              DrawerTile("Sobre Nós",Icons.question_answer,_controller,3),
             ],
           )
         ],

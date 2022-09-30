@@ -91,7 +91,7 @@ class ValidaarCodigoPage extends StatelessWidget {
                           LoadAndToast lt = LoadAndToast();
                           lt.showLoaderDialog(context, "Aguarde.....");
                           Usuario_Controller us = Usuario_Controller();
-                          var retorno = await us.Ativa(email, _codigoController.text);
+                          var retorno = await us.Ativar(email, _codigoController.text);
                           Navigator.pop(context);
                           if (retorno["status"] == "Ok") {
                             Navigator.pop(context);

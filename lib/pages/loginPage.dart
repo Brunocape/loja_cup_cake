@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_cup_cake/controllers/usuarioController.dart';
 import 'package:loja_cup_cake/models/userModel.dart';
+import 'package:loja_cup_cake/pages/homePage.dart';
 import 'package:loja_cup_cake/pages/signUpPage.dart';
 import 'package:loja_cup_cake/pages/validarCodigoPage.dart';
 import 'package:loja_cup_cake/services/loadAndToast.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () async {
               usuario = await Navigator.push(context,MaterialPageRoute(builder: (context) => SignUpPage()));
               if(usuario.ativo == 0 && usuario.id != 0){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, _emailController.text),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, usuario.email!),));
               }
             },
           )
@@ -126,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (response["status"] == "Ok") {
                       usuario = response["user"];
                       Navigator.pop(context);
-                      Navigator.pop(context, usuario);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(usuario),));
                     } else {
                       if(response["mensagem"] == "Este usuario não esta ativo"){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ValidaarCodigoPage(false, _emailController.text),));

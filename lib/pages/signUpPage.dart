@@ -76,7 +76,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      UsuarioModel model = UsuarioModel();
                       LoadAndToast lt = LoadAndToast();
                       lt.showLoaderDialog(context, "Aguarde....");
                       Usuario_Controller us = Usuario_Controller();
@@ -85,6 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           senha: _passController.text,
                           nome: _nameController.text
                       );
+                      Navigator.pop(context);
                       Navigator.pop(context, response["user"]);
                       lt.showToast(context,response["mensagem"]);
                     }

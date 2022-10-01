@@ -59,7 +59,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 decoration: InputDecoration(hintText: "Senha"),
                 obscureText: true,
                 validator: (text) {
-                  if (text!.isEmpty) return "Senha inválida!";
+                  if (text!.isEmpty || text.length < 6)
+                    return "Minimo 6 caracteres";
+                  return null;
                 },
               ),
               SizedBox(

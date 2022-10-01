@@ -24,16 +24,6 @@ class HomeTab extends StatelessWidget {
         _buildBodyBack(),
         CustomScrollView(
           slivers: <Widget>[
-           /* const SliverAppBar(
-              floating: true,
-              snap: true,
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text("Pit - Bruno Capelario Santos"),
-                centerTitle: true,
-              ),
-            ),*/
             FutureBuilder<List<ImagemHome>>(
               future: ic.GetImagens() ,
               builder: (context, snapshot) {

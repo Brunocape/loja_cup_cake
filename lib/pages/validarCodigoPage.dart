@@ -48,6 +48,7 @@ class ValidaarCodigoPage extends StatelessWidget {
                            Text("Informe a nova senha",style: TextStyle(fontSize: 18),),
                           TextFormField(
                             controller: _alterarSenhaController,
+                            obscureText: true,
                             decoration: const InputDecoration(hintText: "Senha"),
                             keyboardType: TextInputType.number,
                             validator: (text) {
